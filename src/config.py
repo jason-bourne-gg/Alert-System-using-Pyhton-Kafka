@@ -1,19 +1,17 @@
 import os
 
-
-
 config = {
     "google_api_key": os.getenv("YOUTUBE_DATA_API_KEY"),
     "youtube_playlist_id": os.getenv("PLAYLIST_ID"),
     "kafka": {
-        "bootstrap.servers": "<your serve>",
+        "bootstrap.servers": os.getenv("BOOTSTRAP_SERVER"),
         "security.protocol": "sasl_ssl",
         "sasl.mechanism": "PLAIN",
-        "sasl.username": "<your key>",
-        "sasl.password": "<your secret>",
+        "sasl.username": os.getenv("COFLUENT_KEY"),
+        "sasl.password": os.getenv("SECRET"),
     },
     "schema_registry": {
-        "url": "<your SR server>",
-        "basic.auth.user.info": "<your SR key>:<your SR secret>",
+        "url": os.getenv("SCHEMA_REGISTRY_URL"),
+        "basic.auth.user.info": f'{os.getenv("SCHEMA_REGISTRY_KEY")}:{os.getenv("SCHEMA_REGISTRY_SECRET")}',
     }
 }
