@@ -1,3 +1,4 @@
+-- make KAKFA's stream to recieve video details from youtube's data api
 CREATE STREAM youtube_videos (
   video_id VARCHAR KEY,
   title VARCHAR,
@@ -10,7 +11,9 @@ CREATE STREAM youtube_videos (
   VALUE_FORMAT = 'avro'
 );
 
-CREATE TABLE youtube_changes WITH (KAFKA_TOPIC='youtube_changes') AS SELECT
+-- Make a table which which accumulates changes from input stream 
+CREATE TABLE youtube_changes WITH (KAFKA_TOPIC='youtube_changes') AS 
+SELECT
   video_id,
   latest_by_offset(title) AS title,
   latest_by_offset(comments, 2)[1] AS comments_previous,
@@ -23,8 +26,11 @@ FROM youtube_videos
 GROUP BY video_id
 EMIT CHANGES;
 
+-- Make stream of chnges of video statastics to be sent to telegram
 CREATE STREAM youtube_changes_stream WITH (KAFKA_TOPIC='youtube_changes', VALUE_FORMAT='avro');
 
+
+-- INSERT queries which will send a NOTIF on telegram bot as notification
 INSERT INTO telegram_outbox
 SELECT
   '<your chat id>' AS `chat_id`,
