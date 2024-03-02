@@ -22,7 +22,7 @@ def fetch_playlist_items_page(google_api_key, youtube_playlist_id, page_token=No
                             })
 
     payload = json.loads(response.text)
-
+    print(payload)
     logging.debug("GOT %s", payload)
 
     return payload
@@ -84,9 +84,9 @@ def main():
     logging.info("START")
 
     schema_registry_client = SchemaRegistryClient(config["schema_registry"])
-    youtube_videos_value_schema = schema_registry_client.get_latest_version("youtube_videos-value")
+    youtube_videos_value_schema = schema_registry_client.get_latest_version("youtube_videos_stream-value")
 
-    kafka_config = config["kafka"] | {
+    kafka_config = config["kafka"]| {
         "key.serializer": StringSerializer(),
         "value.serializer": AvroSerializer(
             schema_registry_client,
@@ -100,12 +100,11 @@ def main():
 
     for video_item in fetch_playlist_items(google_api_key, youtube_playlist_id):
         video_id = video_item["contentDetails"]["videoId"]
-
         for video in fetch_videos(google_api_key, video_id):
             logging.info("GOT %s", pformat(summarize_video(video)))
 
             producer.produce(
-                topic="youtube_videos",
+                topic="youtube_videos_stream",
                 key=video_id,
                 value={
                     "TITLE": video["snippet"]["title"],
