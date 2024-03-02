@@ -18,6 +18,39 @@ This Python script fetches data from the YouTube Data API for a given playlist a
    git clone <repository-url>
    ```
 
+2. Install the required Python libraries:
+
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+Configure the script by updating the config.py file with your YouTube Data API key, Kafka broker details, and other necessary configurations.
+
+## Environment Variables
+
+Configure the Environment variables as below:
+
+    ```bash
+    YOUTUBE_DATA_API_KEY=
+    PLAYLIST_ID=
+    BOOTSTRAP_SERVER=
+    COFLUENT_KEY=
+    SECRET=
+    SCHEMA_REGISTRY_URL=
+    SCHEMA_REGISTRY_KEY=
+    SCHEMA_REGISTRY_SECRET=
+    ```
+
+## Usage
+
+Run the script:
+
+    ```bash
+    python3 src/app.py
+    ```
+
+The script will fetch video data from the specified YouTube playlist and stream it to the Kafka topic.
+
 ## Description
 
 - The script uses the YouTube Data API to fetch video details from a specified playlist.
@@ -36,3 +69,7 @@ The script currently streams video data from a single playlist. Additional logic
 ## Contributions
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+
+```
+
+```
