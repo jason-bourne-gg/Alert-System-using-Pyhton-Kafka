@@ -70,8 +70,11 @@ The script currently streams video data from a single playlist. Additional logic
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
 
-```
+## License
 
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+```
 This Markdown formatted text provides a structured overview of the YouTube Video Data Streaming project, including its requirements, installation instructions, usage guidelines, description, configuration, limitations, contributions, and license information.
 
 ```
